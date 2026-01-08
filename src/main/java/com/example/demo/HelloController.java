@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.dto.UserRequest;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,5 +34,14 @@ public class HelloController {
         user.put("id",id);
         user.put("name", "User"+id);
         return user;
+    }
+
+    @PostMapping("/users")
+    public Map<String, Object> createUser(@RequestBody UserRequest request) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", 1);
+        response.put("name", request.getName());
+        response.put("status", "created");
+        return response;
     }
 }
