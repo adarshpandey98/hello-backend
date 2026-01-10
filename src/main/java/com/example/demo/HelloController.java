@@ -1,13 +1,22 @@
 package com.example.demo;
 
 import com.example.demo.dto.UserRequest;
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 public class HelloController {
+
+    private final UserService userService;
+
+    public HelloController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/hello")
     public String hello() {
@@ -28,20 +37,16 @@ public class HelloController {
     }
 
     @GetMapping("/users/{id}")
-    public Map<String,Object> getUser(@PathVariable int id)
-    {
-        Map<String,Object> user=new HashMap<>();
-        user.put("id",id);
-        user.put("name", "User"+id);
-        return user;
+    public User getUser(@PathVariable int id) {
+        return userService.getUserById(id);
+    }
+    @PostMapping("/users")
+    public User createUser(@RequestBody UserRequest request) {
+        return userService.createUser(request.getName());
     }
 
-    @PostMapping("/users")
-    public Map<String, Object> createUser(@RequestBody UserRequest request) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", 1);
-        response.put("name", request.getName());
-        response.put("status", "created");
-        return response;
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 }
