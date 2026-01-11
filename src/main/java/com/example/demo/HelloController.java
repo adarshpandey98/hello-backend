@@ -49,4 +49,9 @@ public class HelloController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    @GetMapping("/user-names")
+    public List<String> getUserNames() {
+        return userService.getAllUserNames();
+    }
 }

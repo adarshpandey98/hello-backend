@@ -28,4 +28,8 @@ public class UserService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public List<String> getAllUserNames(){
+        return users.stream().map(user -> user.getName()).toList();
+    }
 }
