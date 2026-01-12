@@ -38,7 +38,7 @@ public class HelloController {
 
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable int id) {
-        return userService.getUserById(id);
+        return userService.getUserById(id).orElse(null);;
     }
     @PostMapping("/users")
     public User createUser(@RequestBody UserRequest request) {

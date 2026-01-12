@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -22,11 +23,11 @@ public class UserService {
         return users;
     }
 
-    public User getUserById(int id) {
+    public Optional<User> getUserById(int id) {
         return users.stream()
                 .filter(u -> u.getId() == id)
-                .findFirst()
-                .orElse(null);
+                .findFirst();
+
     }
 
     public List<String> getAllUserNames(){
