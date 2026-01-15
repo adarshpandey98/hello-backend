@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -37,8 +38,8 @@ public class HelloController {
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable int id) {
-        return userService.getUserById(id).orElse(null);;
+    public ResponseEntity<User> getUser(@PathVariable int id) {
+        return userService.getUserById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
     @PostMapping("/users")
     public User createUser(@RequestBody UserRequest request) {
