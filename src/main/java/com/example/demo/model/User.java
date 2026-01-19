@@ -1,12 +1,20 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
 
-    public User(int id, String name) {
-        this.id = id;
+    protected User() {}
+
+    public User(String name) {
         this.name = name;
     }
 

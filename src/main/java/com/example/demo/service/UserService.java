@@ -1,36 +1,37 @@
 package com.example.demo.service;
 
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
-    private final List<User> users = new ArrayList<>();
-    private int currentId = 1;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User createUser(String name) {
-        User user = new User(currentId++, name);
-        users.add(user);
-        return user;
+        return userRepository.save(new User(name));
     }
 
     public List<User> getAllUsers() {
-        return users;
+        return userRepository.findAll();
     }
 
     public Optional<User> getUserById(int id) {
-        return users.stream()
-                .filter(u -> u.getId() == id)
-                .findFirst();
-
+        return userRepository.findById(id);
     }
 
-    public List<String> getAllUserNames(){
-        return users.stream().map(user -> user.getName()).toList();
+    public List<String> getAllUserNames()
+    {
+        return userRepository.findAll().stream().map(User::getName).collect(Collectors.toList());
     }
 }
