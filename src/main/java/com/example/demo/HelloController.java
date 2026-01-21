@@ -55,4 +55,19 @@ public class HelloController {
     public List<String> getUserNames() {
         return userService.getAllUserNames();
     }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable int id,@RequestBody UserRequest request)
+    {
+        return userService.updateUser(id, request.getName()).map(ResponseEntity::ok).
+                orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable int id) {
+        if (userService.deleteUser(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

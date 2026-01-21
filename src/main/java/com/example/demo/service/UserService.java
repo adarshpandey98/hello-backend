@@ -34,4 +34,22 @@ public class UserService {
     {
         return userRepository.findAll().stream().map(User::getName).collect(Collectors.toList());
     }
+
+    public Optional<User> updateUser(int id, String name){
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setName(name);
+                    return userRepository.save(user);
+                });
+    }
+
+    public boolean deleteUser(int id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+
 }
